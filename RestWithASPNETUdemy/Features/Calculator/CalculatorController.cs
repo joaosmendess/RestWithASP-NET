@@ -35,53 +35,7 @@ namespace RestWithASPNETErudio.Controllers
                  }
                  return BadRequest("invalid input");
             }
-       [HttpGet("division/{firstNumber}/{secondNumber}")]
-            public IActionResult GetDivision(string firstNumber, string secondNumber) 
-            {
-                 if (IsNumeric(firstNumber) && IsNumeric(secondNumber) )
-                 {
-                    var subtracion  = ConvertToDecimal(firstNumber) / ConvertToDecimal(secondNumber); 
-                    return Ok(subtracion.ToString());
-                 }
-                 return BadRequest("invalid input");
-            }
-
-
-         [HttpGet("multiplication/{firstNumber}/{secondNumber}")]
-            public IActionResult GetMultiplication(string firstNumber, string secondNumber) 
-
-            {
-                 if (IsNumeric(firstNumber) && IsNumeric(secondNumber) )
-                 {
-                    var multiplication  = ConvertToDecimal(firstNumber) * ConvertToDecimal(secondNumber); 
-                    return Ok(multiplication.ToString());
-                 }
-                 return BadRequest("invalid input");
-            }
-
-            [HttpGet("media/{firstNumber}/{secondNumber}")]
-
-              public IActionResult GetMedia(string firstNumber, string secondNumber)
-              {
-                 if (IsNumeric(firstNumber) && IsNumeric(secondNumber) )
-                 {
-                    var media  = (ConvertToDecimal(firstNumber) + ConvertToDecimal(secondNumber)) / 2; 
-                    return Ok(media.ToString());
-                 }
-                 return BadRequest("invalid input");
-              }
-
-          [HttpGet("square-root/{firstNumber}")]
-
-              public IActionResult GetSquareRoot(string firstNumber)
-              {
-                 if (IsNumeric(firstNumber)  )
-                 {
-                    var squareRoot  = Math.Sqrt((double)ConvertToDecimal(firstNumber)) ; 
-                    return Ok(squareRoot.ToString());
-                 }
-                 return BadRequest("invalid input");
-              }
+              
 
         private decimal ConvertToDecimal(string strNumber)
         {
