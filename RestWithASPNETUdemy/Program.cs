@@ -1,5 +1,6 @@
 using RestWithASPNETErudio.Features.Person;
 using Microsoft.EntityFrameworkCore;
+using Asp.Versioning;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,7 +10,15 @@ builder.Services.AddDbContext<MySQLContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
 // Adicionando serviços ao container
-builder.Services.AddControllers();
+builder.Services.AddControllers(); // Adiciona serviços para controladores
+
+// Adiciona o versionamento da API
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0); // Versão padrão
+    options.AssumeDefaultVersionWhenUnspecified = true; // Assume a versão padrão se não especificada
+});
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

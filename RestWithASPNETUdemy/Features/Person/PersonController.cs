@@ -1,10 +1,12 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNETErudio.Features.Person;
 
 namespace RestWithASPNETErudio.Controllers
 {
+    [ApiVersion("1")]
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/[controller]/v{version:apiVersion}")]
     public class PersonController : ControllerBase
     {
       
