@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RestWithASPNETErudio.Features.Person
+namespace RestWithASPNETErudio.Model.PersonModel
 {
     [Table("person")]
     public class PersonModel 

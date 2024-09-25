@@ -1,10 +1,11 @@
 using Microsoft.EntityFrameworkCore;
+using RestWithASPNETErudio.Model.PersonModel;
 
-namespace RestWithASPNETErudio.Features.Person
+namespace RestWithASPNETUdemy.Model.Context
 {
-   public class MySQLContext : DbContext
-   {
+    public class MySQLContext : DbContext
+    {
     public MySQLContext(DbContextOptions<MySQLContext> options) : base(options) {}
     public DbSet<PersonModel> Persons { get; set; }
-   }
+    }
 }

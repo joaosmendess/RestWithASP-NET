@@ -1,6 +1,7 @@
-namespace RestWithASPNETErudio.Features.Person
+using RestWithASPNETErudio.Model.PersonModel;
+namespace RestWithASPNETErudio.Business
 {
-    public interface IPersonService 
+    public interface IPersonBusiness
     {
         PersonModel Create(PersonModel person);
         PersonModel FindById(long id);

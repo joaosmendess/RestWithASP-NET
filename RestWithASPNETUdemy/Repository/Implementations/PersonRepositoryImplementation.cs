@@ -1,10 +1,13 @@
-namespace RestWithASPNETErudio.Features.Person
+using RestWithASPNETErudio.Model.PersonModel;
+using RestWithASPNETUdemy.Model.Context;
+
+namespace RestWithASPNETErudio.Repository.Implementations
 {
-    public class PersonService : IPersonService
+    public class PersonRepositoryImplementation : IPersonRepository
     {
         private readonly MySQLContext _context;
 
-        public PersonService(MySQLContext context)
+        public PersonRepositoryImplementation(MySQLContext context)
         {
             _context = context;
         }
@@ -73,7 +76,7 @@ namespace RestWithASPNETErudio.Features.Person
             return person;
         }
 
-        private bool Exists(long id)
+        public bool Exists(long id)
         {
             return _context.Persons.Any(p => p.Id.Equals(id));
         }

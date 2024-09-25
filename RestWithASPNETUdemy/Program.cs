@@ -1,6 +1,10 @@
-using RestWithASPNETErudio.Features.Person;
 using Microsoft.EntityFrameworkCore;
 using Asp.Versioning;
+using RestWithASPNETErudio.Business;
+using RestWithASPNETErudio.Business.Implementations;
+using RestWithASPNETErudio.Repository.Implementations;
+using RestWithASPNETErudio.Repository;
+using RestWithASPNETUdemy.Model.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +16,7 @@ builder.Services.AddDbContext<MySQLContext>(options =>
 // Adicionando serviços ao container
 builder.Services.AddControllers(); // Adiciona serviços para controladores
 
+
 // Adiciona o versionamento da API
 builder.Services.AddApiVersioning(options =>
 {
@@ -22,7 +27,8 @@ builder.Services.AddApiVersioning(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IPersonService, PersonService>();
+builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
+builder.Services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
 
 var app = builder.Build();
 
