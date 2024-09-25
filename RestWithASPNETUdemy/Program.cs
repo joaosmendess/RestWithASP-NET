@@ -5,6 +5,9 @@ using RestWithASPNETErudio.Business.Implementations;
 using RestWithASPNETErudio.Repository.Implementations;
 using RestWithASPNETErudio.Repository;
 using RestWithASPNETUdemy.Model.Context;
+using MySqlConnector;
+using EvolveDb;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +16,14 @@ var connectionString = builder.Configuration["MySQLConnection:MySQLConnectionStr
 builder.Services.AddDbContext<MySQLContext>(options =>
     options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString)));
 
+// Caso esteja em desenvolvimento, aplica as migrations com Evolve
+if (builder.Environment.IsDevelopment())
+{
+    MigrateDatabase(connectionString);
+}
+
 // Adicionando serviços ao container
 builder.Services.AddControllers(); // Adiciona serviços para controladores
-
 
 // Adiciona o versionamento da API
 builder.Services.AddApiVersioning(options =>
@@ -32,6 +40,13 @@ builder.Services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
 
 var app = builder.Build();
 
+// Aplica automaticamente as migrations do Entity Framework Core no início da aplicação
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<MySQLContext>();
+    dbContext.Database.Migrate();
+}
+
 // Configuração do pipeline de requisição HTTP
 if (app.Environment.IsDevelopment())
 {
@@ -39,8 +54,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Caso queira habilitar redirecionamento de HTTP para HTTPS
-// app.UseHttpsRedirection();
+// app.UseHttpsRedirection(); // Caso queira habilitar redirecionamento de HTTP para HTTPS
 
 app.UseAuthorization();
 
@@ -48,3 +62,22 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+void MigrateDatabase(string connectionString)
+{
+    try
+    {
+        var evolveConnection = new MySqlConnection(connectionString);
+        var evolve = new Evolve(evolveConnection, Log.Information)
+        {
+            Locations = new List<string> { "db/migrations", "db/dataset" },
+            IsEraseDisabled = true,
+        };
+        evolve.Migrate(); // Aplica as migrações de SQL com Evolve
+    }
+    catch (Exception ex)
+    {
+        Log.Error("Database migration failed", ex);
+        throw;
+    }
+}
