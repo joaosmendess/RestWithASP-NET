@@ -1,4 +1,4 @@
-# Projeto de API RESTful com ASP.NET Core 5 e C#
+# Projeto de API RESTful com ASP.NET Core 8 e C#
 
 ## Visão Geral
 
@@ -26,6 +26,8 @@ O projeto é dividido nas seguintes branches:
 - **main**: Implementa uma **arquitetura baseada em features**.
 - **layered-architecture**: Implementa uma **arquitetura em camadas**.
 - **generic-repository**: Implementa o **padrão repositório genérico**.
+- **value-object**: Implementa o **padrão de projetos Value Object**.
+
 
 Cada branch demonstra diferentes abordagens arquiteturais, proporcionando uma visão sobre como estruturar uma API com ASP.NET.
 
