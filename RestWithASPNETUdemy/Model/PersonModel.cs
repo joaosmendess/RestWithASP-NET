@@ -18,11 +18,11 @@ namespace RestWithASPNETErudio.Model.PersonModel
 
         [Column("address")]
 
-        public string Addres { get; set; }
+        public string Address { get; set; }
 
         [Column("gender")]
 
-        public string Genger { get; set; }
+        public string Gender { get; set; }
 
     }
 }

@@ -2,9 +2,8 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNETErudio.Business;
-using RestWithASPNETErudio.Model;
-using RestWithASPNETErudio.Model.PersonModel;
-using RestWithASPNETErudio.Repository;
+using RestWithASPNETErudio.Data.VO;
+
 
 namespace RestWithASPNETErudio.Controllers
 {
@@ -45,7 +44,7 @@ namespace RestWithASPNETErudio.Controllers
         }
 
       [HttpPost]
-      public IActionResult Post([FromBody] PersonModel person)
+      public IActionResult Post([FromBody] PersonVO person)
         {
            if (person == null) return BadRequest();
 
@@ -53,7 +52,7 @@ namespace RestWithASPNETErudio.Controllers
             
         }
           [HttpPut("id")]
-      public IActionResult Put([FromBody] PersonModel person)
+      public IActionResult Put([FromBody] PersonVO person)
         {
            if (person == null) return BadRequest();
 

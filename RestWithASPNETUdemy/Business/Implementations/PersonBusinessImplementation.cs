@@ -1,3 +1,5 @@
+using RestWithASPNETErudio.Data.Converter.Implementations;
+using RestWithASPNETErudio.Data.VO;
 using RestWithASPNETErudio.Model.PersonModel;
 using RestWithASPNETErudio.Repository;
 using RestWithASPNETUdemy.Model.Context;
@@ -7,16 +9,19 @@ namespace RestWithASPNETErudio.Business.Implementations
     public class PersonBusinessImplementation : IPersonBusiness
     {
         private readonly IRepository<PersonModel> _repository;
+        private readonly PersonConverter _converter;
 
         public PersonBusinessImplementation(IRepository<PersonModel> repository)
         {
             _repository = repository;
+            _converter = new PersonConverter();
         }
 
-        public PersonModel Create(PersonModel person)
+        public PersonVO Create(PersonVO person)
         {
-           
-            return _repository.Create(person);
+           var personEntity = _converter.Parse(person);
+           personEntity = _repository.Create(personEntity);
+           return _converter.Parse(personEntity);
         }
 
        
@@ -26,21 +31,22 @@ namespace RestWithASPNETErudio.Business.Implementations
             _repository.Delete(id);
         }
 
-        public List<PersonModel> FindAll()
+        public List<PersonVO> FindAll()
         {
-            return _repository.FindAll();
+            return _converter.Parse(_repository.FindAll());
         }
 
-        public PersonModel FindById(long id)
+        public PersonVO FindById(long id)
         {
-            return _repository.FindById(id);
+            return _converter.Parse(_repository.FindById(id));
         }
 
-        public PersonModel Update(PersonModel person)
+        public PersonVO Update(PersonVO person)
         {
             
-
-           return _repository.Update(person);
+          var personEntity = _converter.Parse(person);
+           personEntity = _repository.Update(personEntity);
+           return _converter.Parse(personEntity);
 
         }
 

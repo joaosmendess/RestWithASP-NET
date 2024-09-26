@@ -1,6 +1,7 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNETErudio.Business;
+using RestWithASPNETErudio.Data.VO;
 using RestWithASPNETErudio.Model.BookModel;
 
 namespace RestWithASPNETErudio.Controllers
@@ -42,7 +43,7 @@ namespace RestWithASPNETErudio.Controllers
         }
 
       [HttpPost]
-      public IActionResult Post([FromBody] BookModel book)
+      public IActionResult Post([FromBody] BookVO book)
         {
            if (book == null) return BadRequest();
 
@@ -50,7 +51,7 @@ namespace RestWithASPNETErudio.Controllers
             
         }
           [HttpPut("id")]
-      public IActionResult Put([FromBody] BookModel book)
+      public IActionResult Put([FromBody] BookVO book)
         {
            if (book == null) return BadRequest();
 
