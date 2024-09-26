@@ -1,12 +1,12 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using RestWithASPNETErudio.Model.Base;
 
 namespace RestWithASPNETErudio.Model.PersonModel
 {
     [Table("person")]
-    public class PersonModel 
+    public class PersonModel : BaseEntity
     {
-        [Column("id")]
-        public long Id { get; set;}
+       
 
         [Column("first_name")]
 

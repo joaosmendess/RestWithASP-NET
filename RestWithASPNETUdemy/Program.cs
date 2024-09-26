@@ -2,12 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using Asp.Versioning;
 using RestWithASPNETErudio.Business;
 using RestWithASPNETErudio.Business.Implementations;
-using RestWithASPNETErudio.Repository.Implementations;
 using RestWithASPNETErudio.Repository;
 using RestWithASPNETUdemy.Model.Context;
 using MySqlConnector;
 using EvolveDb;
 using Serilog;
+using RestWithASPNETErudio.Repository.Generic;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,7 +36,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-builder.Services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
+builder.Services.AddScoped<IBookBusiness, BookBusinessImplemetation>();
+builder.Services.AddScoped(typeof(IRepository<>), typeof(GenericRepository<>));
+
+
+
 
 var app = builder.Build();
 
