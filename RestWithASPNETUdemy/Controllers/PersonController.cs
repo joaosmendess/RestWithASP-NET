@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNETErudio.Business;
 using RestWithASPNETErudio.Data.VO;
+using RestWithASPNETErudio.Hypermedia.Filters;
+using RestWithASPNETUdemy.Hipermedia.Filters;
 
 
 namespace RestWithASPNETErudio.Controllers
@@ -22,6 +24,8 @@ namespace RestWithASPNETErudio.Controllers
         }
 
         [HttpGet]
+        [TypeFilter(typeof(HyperMediaFilter))]
+
          public IActionResult Get()
         {
 
@@ -32,6 +36,7 @@ namespace RestWithASPNETErudio.Controllers
         }
          
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
       public IActionResult Get(long id)
         {
             var person = _personBusiness.FindById(id);
@@ -44,6 +49,7 @@ namespace RestWithASPNETErudio.Controllers
         }
 
       [HttpPost]
+      [TypeFilter(typeof(HyperMediaFilter))]
       public IActionResult Post([FromBody] PersonVO person)
         {
            if (person == null) return BadRequest();
@@ -52,6 +58,8 @@ namespace RestWithASPNETErudio.Controllers
             
         }
           [HttpPut("id")]
+          [TypeFilter(typeof(HyperMediaFilter))]
+
       public IActionResult Put([FromBody] PersonVO person)
         {
            if (person == null) return BadRequest();
