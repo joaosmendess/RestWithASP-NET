@@ -11,6 +11,7 @@
 using RestWithASPNETUdemy.Hipermedia.Filters;
 using RestWithASPNETErudio.Hypermedia.Enricher;
 using RestWithASPNETErudio.Hypermedia.Filters;
+using RestWithASPNETUdemy.Hipermedia.Enricher;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +48,7 @@ var builder = WebApplication.CreateBuilder(args);
 
     var filterOptions = new HyperMediaFilterOptions();
     filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+    filterOptions.ContentResponseEnricherList.Add(new BookEnricher());
 
     builder.Services.AddSingleton(filterOptions);
 

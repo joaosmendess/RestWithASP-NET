@@ -2,7 +2,6 @@ using RestWithASPNETErudio.Data.Converter.Implementations;
 using RestWithASPNETErudio.Data.VO;
 using RestWithASPNETErudio.Model.PersonModel;
 using RestWithASPNETErudio.Repository;
-using RestWithASPNETUdemy.Model.Context;
 
 namespace RestWithASPNETErudio.Business.Implementations
 {

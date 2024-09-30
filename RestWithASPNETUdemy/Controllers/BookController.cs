@@ -2,6 +2,7 @@ using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using RestWithASPNETErudio.Business;
 using RestWithASPNETErudio.Data.VO;
+using RestWithASPNETErudio.Hypermedia.Filters;
 using RestWithASPNETErudio.Model.BookModel;
 
 namespace RestWithASPNETErudio.Controllers
@@ -21,6 +22,7 @@ namespace RestWithASPNETErudio.Controllers
             _bookBusiness = bookBusiness;
         }
   [HttpGet]
+  [TypeFilter(typeof(HyperMediaFilter))]
          public IActionResult Get()
         {
 
@@ -31,6 +33,7 @@ namespace RestWithASPNETErudio.Controllers
         }
          
         [HttpGet("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
       public IActionResult Get(long id)
         {
             var book = _bookBusiness.FindById(id);
@@ -43,6 +46,7 @@ namespace RestWithASPNETErudio.Controllers
         }
 
       [HttpPost]
+      [TypeFilter(typeof(HyperMediaFilter))]
       public IActionResult Post([FromBody] BookVO book)
         {
            if (book == null) return BadRequest();
@@ -51,6 +55,7 @@ namespace RestWithASPNETErudio.Controllers
             
         }
           [HttpPut("id")]
+          [TypeFilter(typeof(HyperMediaFilter))]
       public IActionResult Put([FromBody] BookVO book)
         {
            if (book == null) return BadRequest();

@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using RestWithASPNETErudio.Business;
 using RestWithASPNETErudio.Data.VO;
 using RestWithASPNETErudio.Hypermedia.Filters;
-using RestWithASPNETUdemy.Hipermedia.Filters;
 
 
 namespace RestWithASPNETErudio.Controllers
