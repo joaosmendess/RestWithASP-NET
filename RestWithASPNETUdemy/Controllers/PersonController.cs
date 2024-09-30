@@ -5,7 +5,6 @@ using RestWithASPNETErudio.Business;
 using RestWithASPNETErudio.Data.VO;
 using RestWithASPNETErudio.Hypermedia.Filters;
 
-
 namespace RestWithASPNETErudio.Controllers
 {
     [ApiVersion("1")]
@@ -13,9 +12,9 @@ namespace RestWithASPNETErudio.Controllers
     [Route("api/[controller]/v{version:apiVersion}")]
     public class PersonController : ControllerBase
     {
-      
         private readonly ILogger<PersonController> _logger;
-        private  IPersonBusiness _personBusiness;
+        private readonly IPersonBusiness _personBusiness;
+
         public PersonController(ILogger<PersonController> logger, IPersonBusiness personBusiness)
         {
             _logger = logger;
@@ -24,56 +23,72 @@ namespace RestWithASPNETErudio.Controllers
 
         [HttpGet]
         [TypeFilter(typeof(HyperMediaFilter))]
-
-         public IActionResult Get()
+        public IActionResult Get()
         {
-
-            
-            return Ok(_personBusiness.FindAll());
-            
-
+            var persons = _personBusiness.FindAll();
+            return Ok(persons);
         }
-         
+
         [HttpGet("{id}")]
         [TypeFilter(typeof(HyperMediaFilter))]
-      public IActionResult Get(long id)
+        public IActionResult Get(long id)
         {
             var person = _personBusiness.FindById(id);
             if (person == null)
             {
-             return NotFound();   
+                return NotFound();
             }
             return Ok(person);
-            
         }
 
-      [HttpPost]
-      [TypeFilter(typeof(HyperMediaFilter))]
-      public IActionResult Post([FromBody] PersonVO person)
+        [HttpPost]
+        [ProducesResponseType((201), Type = typeof(PersonVO))]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public IActionResult Post([FromBody] PersonVO person)
         {
-           if (person == null) return BadRequest();
+            if (person == null) return BadRequest();
 
-            return Ok(_personBusiness.Create(person));
-            
-        }
-          [HttpPut("id")]
-          [TypeFilter(typeof(HyperMediaFilter))]
-
-      public IActionResult Put([FromBody] PersonVO person)
-        {
-           if (person == null) return BadRequest();
-
-            return Ok(_personBusiness.Update(person));
-            
+            var createdPerson = _personBusiness.Create(person);
+            return CreatedAtAction(nameof(Get), new { id = createdPerson.Id }, createdPerson);
         }
 
-           
-      
-
-         [HttpDelete("{id}")]
-      public IActionResult Delete(long id)
+        [HttpPut("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public IActionResult Put(long id, [FromBody] PersonVO person)
         {
-          _personBusiness.Delete(id);
+            if (person == null) return BadRequest();
+
+            var updatedPerson = _personBusiness.Update(person);
+            if (updatedPerson == null) return NotFound();
+            
+            return Ok(updatedPerson);
+        }
+
+        [HttpPatch("{id}")]
+        [TypeFilter(typeof(HyperMediaFilter))]
+        public IActionResult Patch(long id, [FromBody] JsonPatchDocument<PersonVO> patch)
+        {
+            if (patch == null) return BadRequest();
+
+            var person = _personBusiness.FindById(id);
+            if (person == null) return NotFound();
+
+            patch.ApplyTo(person);
+            var updatedPerson = _personBusiness.Update(person);
+            return Ok(updatedPerson);
+        }
+
+        [HttpDelete("{id}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public IActionResult Delete(long id)
+        {
+            var person = _personBusiness.FindById(id);
+            if (person == null) return NotFound();
+
+            _personBusiness.Delete(id);
             return NoContent();
         }
     }
